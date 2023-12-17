@@ -1,45 +1,43 @@
 package com.local.mateo.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "products")
+@Setter
+@Getter
+@AllArgsConstructor
 public class ProductEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int count;
-    @NotNull
-    private String status;
+    private double price;
+    private Boolean enabled;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setCount(int count) {
-        this.count = count;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public Long getId() {
-        return id;
-    }
-    public String getName() {
-        return name;
-    }
-    public int getCount() {
-        return count;
-    }
-    public String getStatus() {
-        return status;
-    }
+    @ManyToMany(
+        fetch = FetchType.EAGER
+    )
+    @JoinTable(
+        name = "product_provider",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "provider_id")
+    )
+    private Set<ProviderEntity> providers = new HashSet<>();
+
+    public ProductEntity(){}
 }

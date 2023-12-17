@@ -1,19 +1,12 @@
 package com.local.mateo.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ErrorModel {
     private int code;
     private String message;
-    public void setCode(int code) {
-        this.code = code;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    public int getCode() {
-        return code;
-    }
-    public String getMessage() {
-        return message;
-    }
 
 }
